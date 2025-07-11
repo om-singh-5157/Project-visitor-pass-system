@@ -1,4 +1,4 @@
-# 🛂 Visitor Pass Management System
+# 🛂 Visitor Pass System
 
 A full-stack web application designed to streamline and secure visitor registration and approval for institutions like offices, universities, or factories. Built with **Node.js**, **Express**, **MongoDB**, and **Bootstrap**, this project supports multiple user roles with PDF pass generation, email alerts, and secure dashboards.
 
