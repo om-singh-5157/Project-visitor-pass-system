@@ -1,0 +1,120 @@
+<% layout('layout/boilerplate') %>
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4 text-primary">
+    <i class="fas fa-user-check me-2"></i>Approver Dashboard - Visitor Approvals
+  </h2>
+
+  <% if (allVisitors.length === 0) { %>
+  <div class="alert alert-info text-center">
+    <i class="fas fa-info-circle me-1"></i> No visitor registrations found.
+  </div>
+  <% } else { %>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle table-hover">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% allVisitors.forEach(visitor => { %>
+        <tr class="text-center">
+          <td><%= visitor.name %></td>
+          <td><%= visitor.email %></td>
+          <td><%= visitor.mobile %></td>
+          <td><%= visitor.startDate.toDateString() %></td>
+          <td><%= visitor.endDate.toDateString() %></td>
+          <td><%= visitor.purpose %></td>
+          <td>
+            <% if (visitor.status === 'pending') { %>
+            <span class="badge bg-warning text-dark">Pending</span>
+            <% } else if (visitor.status === 'approved') { %>
+            <span class="badge bg-success">Approved</span>
+            <% } else { %>
+            <span class="badge bg-danger">Rejected</span>
+            <% } %>
+          </td>
+          <td>
+            <% if(visitor.status === 'pending') { %>
+            <button
+              class="btn btn-sm btn-success me-1"
+              data-bs-toggle="modal"
+              data-bs-target="#remarksModal"
+              data-action="/approver/<%= visitor._id %>/approve"
+            >
+              <i class="fas fa-check"></i> Approve
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#remarksModal"
+              data-action="/approver/<%= visitor._id %>/reject"
+            >
+              <i class="fas fa-times"></i> Reject
+            </button>
+            <% } else { %>
+            <span class="text-muted"
+              ><i class="fas fa-lock"></i> Processed</span
+            >
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</div>
+
+<!-- Modal for Remarks -->
+<div class="modal fade" id="remarksModal" tabindex="-1" aria-hidden="true">
+  <div
+    class="modal-dialog modal-dialog-centered"
+    style="max-width: 600px; width: 100%"
+  >
+    <form id="remarksForm" method="POST" class="w-100">
+      <div class="modal-content rounded-4">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-comment-dots me-2"></i> Remarks
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <textarea
+            name="remarks"
+            class="form-control"
+            rows="5"
+            placeholder="Enter your remarks..."
+            required
+          ></textarea>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="submit" class="btn btn-dark px-4">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const remarksModal = document.getElementById("remarksModal");
+  const remarksForm = document.getElementById("remarksForm");
+
+  remarksModal.addEventListener("show.bs.modal", function (event) {
+    const button = event.relatedTarget;
+    const actionUrl = button.getAttribute("data-action");
+    remarksForm.action = actionUrl;
+  });
+</script>

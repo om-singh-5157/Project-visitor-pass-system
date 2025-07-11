@@ -1,0 +1,58 @@
+<% layout('layout/boilerplate') %>
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow rounded-4">
+        <div class="card-body">
+          <h3 class="text-center mb-4 text-primary">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </h3>
+
+          <form action="/login" method="POST">
+            <!-- Username -->
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="fas fa-user"></i
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="username"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="fas fa-lock"></i
+                ></span>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button class="btn btn-dark" type="submit">Login</button>
+            </div>
+          </form>
+
+          <p class="text-center mt-3">
+            Don’t have an account? <a href="/register">Register</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

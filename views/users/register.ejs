@@ -1,0 +1,89 @@
+<% layout('layout/boilerplate') %>
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow rounded-4">
+        <div class="card-body">
+          <h3 class="text-center mb-4 text-primary">
+            <i class="fas fa-user-plus"></i> Register
+          </h3>
+
+          <form action="/register" method="POST">
+            <!-- Username -->
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="fas fa-user"></i
+                ></span>
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="fas fa-envelope"></i
+                ></span>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Role -->
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="fas fa-user-tag"></i
+                ></span>
+                <select name="role" class="form-select" required>
+                  <option disabled selected value="">Select Role</option>
+                  <option value="user" selected>Visitor</option>
+                  <option value="approver">Approver</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="fas fa-lock"></i
+                ></span>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-dark">Register</button>
+            </div>
+          </form>
+
+          <p class="text-center mt-3">
+            Already registered? <a href="/login">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<% layout('layout/boilerplate') %>
+
+<div class="container mt-5">
+  <h3 class="text-dark text-center mb-4">
+    <i class="fas fa-users me-2"></i>All Registered Users
+  </h3>
+
+  <% if (users.length === 0) { %>
+  <div class="alert alert-info text-center">
+    <i class="fas fa-info-circle me-1"></i>No users found.
+  </div>
+  <% } else { %>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <!-- <th>Registered On</th> -->
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(u => { %>
+        <tr class="text-center">
+          <td><%= u.username %></td>
+          <td><%= u.email %></td>
+          <!-- <td><%= u.createdAt?.toDateString() || 'N/A' %></td> -->
+          <td>
+            <a
+              href="/admin/users/<%= u._id %>"
+              class="btn btn-sm btn-outline-dark"
+            >
+              <i class="fas fa-clock me-1"></i>View History
+            </a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</div>

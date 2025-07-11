@@ -1,0 +1,72 @@
+<% layout('layout/boilerplate') %>
+
+<div class="container mt-5 mb-5">
+  <h3 class="text-center text-primary mb-4">
+    <i class="fas fa-history me-2"></i>Visitor Registration History
+  </h3>
+
+  <% if (visitors.length === 0) { %>
+  <div class="alert alert-info text-center">
+    <i class="fas fa-info-circle me-1"></i> No registrations found.
+  </div>
+  <% } else { %>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-dark">
+        <tr class="text-center">
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Dates</th>
+          <th>Purpose</th>
+          <th>Approver</th>
+          <th>Status</th>
+          <th>Pass</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% visitors.forEach(v => { %>
+        <tr class="text-center">
+          <td><%= v.name %></td>
+          <td><%= v.mobile %></td>
+          <td>
+            <%= v.startDate.toDateString() %> - <%= v.endDate.toDateString() %>
+          </td>
+          <td><%= v.purpose %></td>
+          <td><%= v.approver?.email || 'N/A' %></td>
+          <td>
+            <% if (v.status === 'pending') { %>
+            <span class="badge bg-warning text-dark"
+              ><i class="fas fa-hourglass-half me-1"></i>Pending</span
+            >
+            <% } else if (v.status === 'approved') { %>
+            <span class="badge bg-success"
+              ><i class="fas fa-check-circle me-1"></i>Approved</span
+            >
+            <% } else { %>
+            <span class="badge bg-danger"
+              ><i class="fas fa-times-circle me-1"></i>Rejected</span
+            >
+            <% } %>
+          </td>
+          <td>
+            <% if (v.status === 'approved' && v.passPdf) { %>
+            <a
+              href="<%= v.passPdf %>"
+              target="_blank"
+              class="btn btn-sm btn-outline-primary"
+            >
+              <i class="fas fa-download me-1"></i>PDF
+            </a>
+            <% } else { %>
+            <span class="text-muted"
+              ><i class="fas fa-ban"></i> Not Available</span
+            >
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</div>

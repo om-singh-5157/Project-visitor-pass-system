@@ -1,0 +1,162 @@
+<% layout('layout/boilerplate') %>
+
+<div class="container mt- mb-5">
+  <div class="card shadow rounded-4">
+    <div class="card-body">
+      <h3 class="mb-4 text-primary text-center">
+        <i class="fas fa-id-card-alt me-2"></i>New Visitor Registration
+      </h3>
+
+      <form action="/visitor" method="POST">
+        <div class="row g-2">
+          <!-- Visitor Name -->
+          <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <input
+                type="text"
+                name="visitor[name]"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Visitor Email -->
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                ><i class="fas fa-envelope"></i
+              ></span>
+              <input
+                type="email"
+                name="visitor[email]"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Visitor Mobile -->
+          <div class="col-md-6">
+            <label class="form-label">Mobile</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                ><i class="fas fa-phone-alt"></i
+              ></span>
+              <input
+                type="text"
+                name="visitor[mobile]"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="col-md-6">
+            <label class="form-label">Date of Birth</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                ><i class="fas fa-birthday-cake"></i
+              ></span>
+              <input
+                type="date"
+                name="visitor[dob]"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Approver Selection -->
+          <div class="col-md-6">
+            <label class="form-label">Select Approver</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                ><i class="fas fa-user-check"></i
+              ></span>
+              <select name="visitor[approver]" class="form-select" required>
+                <option value="" disabled selected>Select Approver</option>
+                <% approvers.forEach(approver => { %>
+                <option value="<%= approver._id %>">
+                  <%= approver.username %> - <%= approver.email %>
+                </option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+
+          <!-- Visit Purpose -->
+          <div class="col-md-12">
+            <label class="form-label">Purpose</label>
+            <textarea
+              name="visitor[purpose]"
+              class="form-control"
+              rows="3"
+              placeholder="State your purpose for visit..."
+              required
+            ></textarea>
+          </div>
+
+          <!-- Start & End Dates -->
+          <div class="col-md-6">
+            <label class="form-label">Start Date</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                ><i class="fas fa-calendar-alt"></i
+              ></span>
+              <input
+                type="date"
+                name="visitor[startDate]"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">End Date</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                ><i class="fas fa-calendar-alt"></i
+              ></span>
+              <input
+                type="date"
+                name="visitor[endDate]"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-dark px-5" type="submit">
+            <i class="fas fa-paper-plane me-2"></i>Submit Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const startInput = document.querySelector('input[name="visitor[startDate]"]');
+  const endInput = document.querySelector('input[name="visitor[endDate]"]');
+
+  startInput.addEventListener("change", () => {
+    const startDate = new Date(startInput.value);
+    const maxEndDate = new Date(startDate);
+    maxEndDate.setDate(startDate.getDate() + 3);
+
+    endInput.min = startInput.value;
+    endInput.max = maxEndDate.toISOString().split("T")[0];
+
+    if (new Date(endInput.value) > maxEndDate) {
+      endInput.value = "";
+    }
+  });
+</script>
